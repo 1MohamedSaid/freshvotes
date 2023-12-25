@@ -1,21 +1,30 @@
 <html xmlns:th="http://thymeleaf.org">
 <body>
 <div th:fragment="commentThread" th:remove="tag">
-    <div th:each="comment : ${thread}" style="margin-left: 2em">
-        <form th:action="@{/products/{productId}/features/{featureId}/upvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post">
-            <button type="submit">Upvote</button>
-        </form>
-        <p><span th:text="${comment.voteCount}"></span></p>
-        <form th:action="@{/products/{productId}/features/{featureId}/downvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post">
-            <button type="submit">Downvote</button>
-        </form>
+    <style>
+        .vote-container{
+            float: left;
+        }
+    </style>
 
+    <div class="comment" th:each="comment : ${thread}" style="margin-left: 2em">
+        <div class="comment-container">
+            <div class="vote-container" style="width:40px;border-left:4px solid transparent">
+                <form class="arrow-upvote" th:action="@{/products/{productId}/features/{featureId}/upvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post">
+                    <button type="submit" class="btn" style="color: green;position:relative; right:10px;bottom: 12px">🢁</button>
+                </form>
+                <p><span class="vote-count" th:text="${comment.voteCount}" style="margin-left: 1em;position:relative; right:10px;bottom: 12px"> </span></p>
+                <form class="arrow-downvote" th:action="@{/products/{productId}/features/{featureId}/downvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post" style="bottom: 50px">
+                    <button type="submit"  class="btn" style="color: red;position:relative; bottom:21px;right: 10px">🢃</button>
+                </form>
+            </div>
         <div th:inline="text">
             <strong>[[${comment.user.name}]]</strong> - [[${#dates.format(comment.createdOn, 'MMM dd, yyyy h:mm a')}]]
         </div>
-        <span th:text="${comment.text}">Example comment</span>
+         <span th:text="${comment.text}">Example comment</span>
         <div>
             <button class="btn btn-link" th:id="|replyBtn-${comment.id}|" style="margin-left: 12em">reply</button>
+        </div>
         </div>
         <form th:id="|replyForm-${comment.id}|" class="d-none" th:action="@{/products/{productId}/features/{featureId}/comments(productId=${feature.product.id},featureId=${feature.id})}" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
