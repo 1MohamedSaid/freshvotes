@@ -17,6 +17,9 @@ public class Feature {
   private String title;
   private String description;
   private String status;
+  @OneToMany
+  private List<Vote> votes;
+  private Integer voteCount = 0;
   @ManyToOne
   private User user;
   @ManyToOne

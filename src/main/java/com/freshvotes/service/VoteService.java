@@ -4,11 +4,13 @@ import com.freshvotes.domain.Comment;
 import com.freshvotes.domain.User;
 import com.freshvotes.domain.Vote;
 import com.freshvotes.repositories.CommentRepository;
+import com.freshvotes.repositories.FeatureRepository;
 import com.freshvotes.repositories.UserRepository;
 import com.freshvotes.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -19,8 +21,10 @@ public class VoteService {
     VoteRepository voteRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    FeatureRepository featureRepository;
 
-    public void upvote(Long commentId, User user) {
+    public void upvoteComment(Long commentId, User user) {
         user = userRepository.findByUsername(user.getName());
         Optional<Comment> comment = commentRepository.findById(commentId);
         Optional<Vote> existingVote = voteRepository.findByUserAndComment(user, comment.get());
@@ -46,7 +50,7 @@ public class VoteService {
         }
     }
 
-    public void downvote(Long commentId, User user) {
+    public void downvoteComment(Long commentId, User user) {
         user = userRepository.findByUsername(user.getName());
         Optional<Comment> comment = commentRepository.findById(commentId);
         Optional<Vote> existingVote = voteRepository.findByUserAndComment(user, comment.get());

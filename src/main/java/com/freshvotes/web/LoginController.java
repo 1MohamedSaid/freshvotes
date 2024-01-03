@@ -1,6 +1,10 @@
 package com.freshvotes.web;
 
+import com.freshvotes.repositories.UserRepository;
+import com.freshvotes.security.SecurityUtil;
+import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

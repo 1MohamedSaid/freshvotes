@@ -22,13 +22,13 @@ public class VoteController {
 
     @PostMapping("/products/{productId}/features/{featureId}/upvote/{commentId}")
     public String upvote(@PathVariable Long commentId, @AuthenticationPrincipal User user, @PathVariable Long featureId, @PathVariable String productId) {
-        voteService.upvote(commentId,user);
+        voteService.upvoteComment(commentId,user);
         return "redirect:/products/{productId}/features/" + featureId;
     }
 
     @PostMapping("/products/{productId}/features/{featureId}/downvote/{commentId}")
     public String downvote(@PathVariable Long commentId, @AuthenticationPrincipal User user, @PathVariable Long featureId, @PathVariable String productId) {
-        voteService.downvote(commentId,user);
+        voteService.downvoteComment(commentId,user);
         return "redirect:/products/{productId}/features/" + featureId;
     }
 }

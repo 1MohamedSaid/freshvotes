@@ -6,6 +6,8 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletResponse;
 
+import com.freshvotes.repositories.UserRepository;
+import com.freshvotes.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +28,8 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepo;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/products/{productId}")
     public String getProduct(@PathVariable Long productId, ModelMap model, HttpServletResponse response) throws IOException {
@@ -59,12 +63,17 @@ public class ProductController {
 
     @PostMapping("/products/{productId}")
     public String saveProduct(@PathVariable Long productId, Product product) {
+        String username = SecurityUtil.getSessionUser();
+        User user = userRepository.findByUsername(username);
+        product.setUser(user);
         productRepo.save(product);
         return "redirect:/dashboard";
     }
 
     @PostMapping("/products")
-    public String createProduct(@AuthenticationPrincipal User user) {
+    public String createProduct() {
+        String username = SecurityUtil.getSessionUser();
+        User user = userRepository.findByUsername(username);
         Product product = new Product();
         product.setPublished(false);
         product.setUser(user);

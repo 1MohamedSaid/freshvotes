@@ -1,4 +1,4 @@
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <body>
 <div th:fragment="commentThread" th:remove="tag">
     <style>
@@ -11,11 +11,11 @@
         <div class="comment-container">
             <div class="vote-container" style="width:40px;border-left:4px solid transparent">
                 <form class="arrow-upvote" th:action="@{/products/{productId}/features/{featureId}/upvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post">
-                    <button type="submit" class="btn" style="color: green;position:relative; right:10px;bottom: 12px">🢁</button>
+                    <button type="submit" class="btn" style="color: green;position:relative; right:10px;bottom: 6px">🢁</button>
                 </form>
-                <p><span class="vote-count" th:text="${comment.voteCount}" style="margin-left: 1em;position:relative; right:10px;bottom: 12px"> </span></p>
+                <p><strong><span class="vote-count" th:text="${comment.voteCount}" style="margin-left: 1em;position:relative; right:10px;bottom: 12px"> </span></strong></p>
                 <form class="arrow-downvote" th:action="@{/products/{productId}/features/{featureId}/downvote/{commentId}(productId=${feature.product.id},featureId=${feature.id},commentId=${comment.id})}" method="post" style="bottom: 50px">
-                    <button type="submit"  class="btn" style="color: red;position:relative; bottom:21px;right: 10px">🢃</button>
+                    <button type="submit"  class="btn" style="color: red;position:relative; bottom:30px;right: 10px">🢃</button>
                 </form>
             </div>
         <div th:inline="text">

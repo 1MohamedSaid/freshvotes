@@ -15,4 +15,6 @@ public class Vote {
     private User user;
     @ManyToOne
     private Comment comment;
+    @ManyToOne
+    private Feature feature;
 }

@@ -65,4 +65,15 @@ public class FeatureController {
         }
         return "redirect:/p/" + encodedProductName;
     }
+    @PostMapping("/{featureId}/upvote")
+    public String upvoteFeature( @AuthenticationPrincipal User user, @PathVariable Long featureId, @PathVariable String productId) {
+        featureService.upvoteFeature(featureId,user);
+        return "redirect:/products/{productId}/features/" + featureId;
+    }
+
+    @PostMapping("/{featureId}/downvote")
+    public String downvoteFeature( @AuthenticationPrincipal User user, @PathVariable Long featureId, @PathVariable String productId) {
+        featureService.downvoteFeature(featureId,user);
+        return "redirect:/products/{productId}/features/" + featureId;
+    }
 }
